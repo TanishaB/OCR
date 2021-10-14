@@ -3,6 +3,7 @@ package com.example.ocr;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -21,6 +22,8 @@ import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -120,11 +123,17 @@ public class MainActivity extends AppCompatActivity {
                                     stringBuilder.append(item.getValue());
                                     stringBuilder.append("\n");
                                 }
-                                textView.setText(stringBuilder.toString());
-                                textToSpeech.speak(stringBuilder.toString(), TextToSpeech.QUEUE_FLUSH, null, null);
+                                cameraSource.stop();
+                                viewText(stringBuilder.toString());
+
                             }
                         });
                     }
+
+                }
+                public void viewText(String textconverted){
+                    textView.setText(textconverted);
+                    textToSpeech.speak(textconverted, TextToSpeech.QUEUE_FLUSH, null, null);
                 }
             });
         }
